@@ -1,0 +1,13 @@
+Songs:D:\osu!\Songs
+Search:key=7
+
+Standard:0
+Taiko:1
+Catch:1
+Mania:1
+
+Ranked:1
+Approved:1
+Qualified:1
+Loved:1
+Unranked:1
