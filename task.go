@@ -17,18 +17,18 @@ const (
 )
 
 type job struct {
-	result  int
-	id      int
-	creator string
-	title   string
+	result int
+	id     int
+	artist string
+	title  string
 }
 
 func doTask(tasks []map[string]interface{}, i int) job {
 	v := tasks[i]["id"].(string)
 	setID, err := strconv.Atoi(v)
-	creator, title := tasks[i]["creator"].(string), tasks[i]["title"].(string)
+	artist, title := tasks[i]["artist"].(string), tasks[i]["title"].(string)
 
-	res := job{i, setID, creator, title}
+	res := job{i, setID, artist, title}
 	switch {
 	case err != nil:
 		res.result = errDownload
@@ -37,7 +37,7 @@ func doTask(tasks []map[string]interface{}, i int) job {
 	case ban[setID]:
 		res.result = mapBanned
 	default:
-		if err = download(setID, creator, title); err != nil {
+		if err = download(setID, artist, title); err != nil {
 			res.result = errDownload
 		}
 	}
@@ -64,7 +64,7 @@ func download(setID int, creator, title string) error {
 }
 
 func printResult(res job) {
-	fname := getFname(res.id, res.creator, res.title)
+	fname := getFname(res.id, res.artist, res.title)
 	switch res.result {
 	case errDownload:
 		fmt.Printf("error: %s\n", fname)
@@ -77,8 +77,8 @@ func printResult(res job) {
 	}
 }
 
-func getFname(setID int, creator, title string) string {
-	name := fmt.Sprintf("%d %s - %s.osz", setID, creator, title)
+func getFname(setID int, artist, title string) string {
+	name := fmt.Sprintf("%d %s - %s.osz", setID, artist, title)
 	for _, letter := range []string{"<", ">", ":", "\"", "/", "\\", "|", "?", "*"} {
 		name = strings.ReplaceAll(name, letter, "-")
 	}
