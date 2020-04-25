@@ -74,44 +74,27 @@ func loadExist(root string) map[int]bool {
 	return mapSetIDs
 }
 
-func loadBan() (map[int]bool, map[string]bool) {
+// get map of ban mapset id
+func loadBan() map[int]bool {
 	var s string
 	var id int
-	banID := make(map[int]bool)
-	banMapper := make(map[string]bool)
+	ban := make(map[int]bool)
 
 	f, err := os.Open("ban.txt")
 	check(err)
 	defer f.Close()
 
-	var section string
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 		s = scanner.Text()
-		switch {
-		case s == "":
+		if s == "" {
 			continue
-		case isSection(s):
-			section = strings.Trim(s, "[]")
-		default:
-			switch section {
-			case "MapSetID":
-				id, err = strconv.Atoi(s)
-				if err != nil {
-					continue
-				}
-				banID[id] = true
-			case "Mapper":
-				banMapper[s] = true
-			}
 		}
+		id, err = strconv.Atoi(s)
+		if err != nil {
+			continue
+		}
+		ban[id] = true
 	}
-	return banID, banMapper
-}
-
-func isSection(line string) bool {
-	if len(line) == 0 {
-		return false
-	}
-	return string(line[0]) == "[" && string(line[len(line)-1]) == "]"
+	return ban
 }

@@ -28,30 +28,13 @@ func doTask(tasks []map[string]interface{}, i int) job {
 	setID, err := strconv.Atoi(v)
 	creator, title := tasks[i]["creator"].(string), tasks[i]["title"].(string)
 
-	var banned bool = banID[setID] || banMapper[creator]
-	if !banned {
-		beatmaps := tasks[i]["beatmaps"].([]interface{})
-		for i := range beatmaps {
-			beatmap := beatmaps[i].(map[string]interface{})
-			splits := strings.SplitN(beatmap["name"].(string), "'", 2)
-			if len(splits) < 2 {
-				continue
-			}
-			guestName := splits[0]
-			if banMapper[guestName] {
-				banned = true
-				break
-			}
-		}
-	}
-
 	res := job{i, setID, creator, title}
 	switch {
 	case err != nil:
 		res.result = errDownload
 	case exist[setID]:
 		res.result = mapExist
-	case banned:
+	case ban[setID]:
 		res.result = mapBanned
 	default:
 		if err = download(setID, creator, title); err != nil {

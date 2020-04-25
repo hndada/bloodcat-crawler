@@ -13,11 +13,10 @@ import (
 )
 
 var (
-	dir       string // osu! songs folder
-	search    string // search keywords
-	exist     map[int]bool
-	banID     map[int]bool
-	banMapper map[string]bool
+	dir    string // osu! songs folder
+	search string // search keywords
+	exist  map[int]bool
+	ban    map[int]bool
 )
 
 func main() {
@@ -28,7 +27,7 @@ func main() {
 	var modes, stats []int
 	dir, modes, stats = loadConfig()
 	exist = loadExist(dir)
-	banID, banMapper = loadBan()
+	ban = loadBan()
 	page := 1
 
 	fmt.Printf("osu! Songs folder: %s\n", dir)
@@ -37,6 +36,7 @@ func main() {
 	fmt.Printf("Status: %+v (0: unranked 1: ranked 2: approved 3: qualified 4: loved)\n", stats)
 	time.Sleep(time.Second)
 	fmt.Print("\nStart Download? (y/n) ")
+
 	var yes string
 	_, err = fmt.Scan(&yes)
 	check(err)
