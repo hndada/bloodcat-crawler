@@ -14,10 +14,10 @@ It would make Bloodcat put bot-detecting features like reCAPTCHA.
 
 There're dropped features:
 - Update all outdated beatmaps (local ranking goes wiped if update happens)
-Mapset at Bloodcat might not be latest.
+    * Mapset at Bloodcat might not be latest.
 
 - Update omitted beatmaps from a set
-It harms simplicity of the code.
+    * It harms simplicity of the code.
 
 - Skip downloading maps that mapped by mappers that you banned
-It is ambiguous and tricky to handle at the crawler.
+    * It is ambiguous and tricky to handle at the crawler.
