@@ -5,7 +5,7 @@ New bloodcat crawler that can download Loved maps!
 # How to use
 1. Set osu! Songs folder, search keywords and options at config.txt.
 2. Put SetIDs that you don't want to download at ban.txt.
-3. Double click exe file.
+3. Double click the .exe file.
 
 # Note
 The program's usefulness comes from simplicity and stability of Bloodcat service itself.
