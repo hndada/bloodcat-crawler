@@ -2,8 +2,8 @@ Songs:D:\osu!\Songs
 Search:key=7
 
 Standard:0
-Taiko:1
-Catch:1
+Taiko:0
+Catch:0
 Mania:1
 
 Ranked:1
