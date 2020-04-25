@@ -74,7 +74,6 @@ func loadExist(root string) map[int]bool {
 	return mapSetIDs
 }
 
-// get map of ban mapset id
 func loadBan() map[int]bool {
 	var s string
 	var id int

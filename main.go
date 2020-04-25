@@ -20,10 +20,6 @@ var (
 )
 
 func main() {
-	u, err := url.Parse("https://bloodcat.com/osu/")
-	check(err)
-
-	params := url.Values{}
 	var modes, stats []int
 	dir, modes, stats = loadConfig()
 	exist = loadExist(dir)
@@ -38,7 +34,7 @@ func main() {
 	fmt.Print("\nStart Download? (y/n) ")
 
 	var yes string
-	_, err = fmt.Scan(&yes)
+	_, err := fmt.Scan(&yes)
 	check(err)
 	yes = strings.TrimSpace(yes)
 	yes = strings.ToLower(yes)
@@ -47,15 +43,15 @@ func main() {
 		os.Exit(1)
 	}
 
-	if len(os.Args) > 1 {
-		params.Add("q", strings.Join(os.Args[1:], " "))
-	}
+	u, err := url.Parse("https://bloodcat.com/osu/")
+	check(err)
+	params := url.Values{}
 	params.Add("mod", "json")
+	params.Add("q", search)
 	params.Add("m", joinInts(modes))
 	params.Add("s", joinInts(stats))
 	params.Add("p", strconv.Itoa(page))
 	u.RawQuery = params.Encode()
-
 	for {
 		// request map list
 		fmt.Printf("Trawling page %d...\n", page)
