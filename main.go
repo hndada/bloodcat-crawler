@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -39,7 +40,6 @@ func main() {
 	check(err)
 	yes = strings.TrimSpace(yes)
 	yes = strings.ToLower(yes)
-	fmt.Println(len(yes))
 	if yes != "y" {
 		os.Exit(1)
 	}
@@ -79,6 +79,8 @@ func main() {
 		params.Set("p", strconv.Itoa(page))
 		u.RawQuery = params.Encode()
 	}
-	fmt.Println("Finish!\nPress the Enter to terminate the console.")
-	fmt.Scanln() // wait for Enter Key
+	buf := bufio.NewReader(os.Stdin)
+	buf.Discard(1) // I guess it's due to variable yes
+	fmt.Print("\nFinish! Press the Enter to terminate the console.")
+	buf.ReadBytes('\n') // wait for Enter Key
 }
