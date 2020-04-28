@@ -14,14 +14,15 @@ import (
 
 var (
 	dir    string // osu! songs folder
+	modes  = make([]int, 0, 4)
+	stats  = make([]int, 0, 5)
 	search string // search keywords
 	exist  map[int]bool
 	ban    map[int]bool
 )
 
 func main() {
-	var modes, stats []int
-	dir, modes, stats = loadConfig()
+	loadConfig()
 	exist = loadExist(dir)
 	ban = loadBan()
 	page := 1
@@ -78,5 +79,6 @@ func main() {
 		params.Set("p", strconv.Itoa(page))
 		u.RawQuery = params.Encode()
 	}
-	fmt.Println("Finish!")
+	fmt.Println("Finish!\nPress the Enter to terminate the console.")
+	fmt.Scanln() // wait for Enter Key
 }

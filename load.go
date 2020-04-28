@@ -9,16 +9,21 @@ import (
 	"strings"
 )
 
-func loadConfig() (string, []int, []int) {
+func loadConfig() {
 	f, err := os.Open("config.txt")
 	check(err)
 	defer f.Close()
 	scanner := bufio.NewScanner(f)
 
 	var values []string
+	var text string
 	raw := make(map[string]bool)
 	for scanner.Scan() {
-		values = strings.SplitN(scanner.Text(), ":", 2)
+		text = scanner.Text()
+		if text == "" || strings.HasPrefix(text, "//") {
+			continue
+		}
+		values = strings.SplitN(text, ":", 2)
 		if len(values) < 2 {
 			continue
 		}
@@ -42,19 +47,16 @@ func loadConfig() (string, []int, []int) {
 		}
 	}
 
-	modes := make([]int, 0, 4)
 	for i, mode := range []string{"Standard", "Taiko", "Catch", "Mania"} {
 		if on, ok := raw[mode]; on && ok {
 			modes = append(modes, i)
 		}
 	}
-	stats := make([]int, 0, 5)
 	for i, stat := range []string{"Unranked", "Ranked", "Approved", "Qualified", "Loved"} {
 		if on, ok := raw[stat]; on && ok {
 			stats = append(stats, i)
 		}
 	}
-	return dir, modes, stats
 }
 
 func loadExist(root string) map[int]bool {
